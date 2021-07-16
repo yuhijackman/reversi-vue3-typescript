@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Cell from '@/components/Cell.vue';
-import { Row } from '@/services/reversi';
+import Row from '@/models/Row';
 
 export default defineComponent({
   props: {

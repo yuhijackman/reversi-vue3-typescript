@@ -9,7 +9,8 @@
 
 <script>
 import { defineComponent, computed } from 'vue';
-import { Cell, CellState } from '@/services/reversi';
+import Cell from '@/models/Cell';
+import CellState from '@/types/CellState';
 
 export default defineComponent({
   props: {

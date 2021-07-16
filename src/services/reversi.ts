@@ -1,32 +1,11 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-shadow */
-/* eslint-disable no-useless-constructor */
-/* eslint-disable max-classes-per-file */
+// Types
+import CellState from '@/types/CellState';
 
-export enum CellState {
-  White = 'white',
-  Black = 'black',
-  None = 'none',
-}
-
-export class Cell {
-  public state: CellState = CellState.None;
-
-  constructor(public x: number, public y: number) {}
-}
-
-export class Row {
-  cells: Cell[];
-
-  constructor(public x: number) {
-    this.cells = [...Array(8).keys()].map((y) => new Cell(x, y));
-  }
-}
-
-export class Coordinate {
-  constructor(public x: number, public y: number) {}
-}
+// Models
+import Cell from '@/models/Cell';
+import Row from '@/models/Row';
+import Coordinate from '@/models/Coordinate';
 
 interface TraverseSchema {
   [x: string]: any,
@@ -51,7 +30,7 @@ export class Board {
 
   public turn: CellState = CellState.Black;
 
-  public end: boolean = false;
+  public end = false;
 
   constructor() {
     this.rows = [...Array(8).keys()].map((x) => new Row(x));
@@ -82,7 +61,7 @@ export class Board {
     return (x < 8 && x >= 0) && (y < 8 && y >= 0);
   }
 
-  private flippableCells(targetCell: Cell, stanbyPiece: CellState): Cell[] {
+  private getFlippableCells(targetCell: Cell, stanbyPiece: CellState): Cell[] {
     const helper = (
       targetCoordinate: Coordinate,
       next: (prev: Coordinate) => Coordinate,
@@ -141,8 +120,8 @@ export class Board {
 
   isPlacableCell(cell: Cell, results: PieceCountsByColor): void {
     if (cell.state === CellState.None) {
-      const flippableCellsForBlack: Cell[] = this.flippableCells(cell, CellState.Black);
-      const flippableCellsForWhite: Cell[] = this.flippableCells(cell, CellState.White);
+      const flippableCellsForBlack: Cell[] = this.getFlippableCells(cell, CellState.Black);
+      const flippableCellsForWhite: Cell[] = this.getFlippableCells(cell, CellState.White);
       if (flippableCellsForBlack.length > 0) {
         results[CellState.Black] += 1;
       }
@@ -192,7 +171,7 @@ export class Board {
 
   public place(x: number, y: number): void {
     const pickedCell: Cell = this.rows[x].cells[y];
-    const flippableCells: Cell[] = this.flippableCells(pickedCell, this.turn);
+    const flippableCells: Cell[] = this.getFlippableCells(pickedCell, this.turn);
     if (!(pickedCell.state === CellState.None && flippableCells.length > 0)) return;
     pickedCell.state = this.turn;
     Board.flipCells(flippableCells, this.turn);
