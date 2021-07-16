@@ -36,7 +36,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    console.log(props.pieceCountsByColor);
     const blackClass = computed(() => ({
       active: props.turn === CellState.Black,
       inactive: props.turn === CellState.White,
