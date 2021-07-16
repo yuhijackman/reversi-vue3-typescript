@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import Row from '@/components/Row.vue';
-import { Board } from '@/services/reversi';
+import { Board } from '@/models/Board';
 import Players from '@/components/Players.vue';
 
 export default defineComponent({

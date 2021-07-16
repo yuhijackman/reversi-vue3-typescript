@@ -53,7 +53,7 @@ export class Board {
     this.rows[4].cells[4].state = CellState.White;
   }
 
-  private getCellByCoordinate(x: number, y:number) {
+  private getCellByCoordinate(x: number, y: number) {
     return this.rows[x].cells[y];
   }
 
@@ -118,7 +118,7 @@ export class Board {
     }
   }
 
-  isPlacableCell(cell: Cell, results: PieceCountsByColor): void {
+  private isPlacableCell(cell: Cell, results: PieceCountsByColor): void {
     if (cell.state === CellState.None) {
       const flippableCellsForBlack: Cell[] = this.getFlippableCells(cell, CellState.Black);
       const flippableCellsForWhite: Cell[] = this.getFlippableCells(cell, CellState.White);

@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, PropType } from 'vue';
-import { PieceCountsByColor } from '@/services/reversi';
+import { PieceCountsByColor } from '@/models/Board';
 import CellState from '@/types/CellState';
 
 export default defineComponent({
