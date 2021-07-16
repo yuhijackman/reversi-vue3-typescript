@@ -1,22 +1,33 @@
 <template>
   <div class="board">
-    <Row
-      v-for="row in board.rows"
-      :row="row"
-      :key="row.x"
-      @onPlace="onPlace"
+    <div class="alert" v-if="board.end">
+      End
+    </div>
+    <Players
+      :turn="board.turn"
+      :pieceCountsByColor="board.pieceCountsByColor"
     />
+    <div class="board__content">
+      <Row
+        v-for="row in board.rows"
+        :row="row"
+        :key="row.x"
+        @onPlace="onPlace"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import Row from '@/components/Row.vue';
 import { Board } from '@/services/reversi';
+import Players from '@/components/Players.vue';
 
 export default defineComponent({
   components: {
     Row,
+    Players,
   },
   setup() {
     const board = reactive(new Board());
@@ -35,9 +46,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .board {
-  background-color: green;
-  width: 800px;
-  margin: 0 auto;
-  border: 10px solid black;
+  &__content {
+    background-color: green;
+    width: 800px;
+    margin: 0 auto;
+    border: 10px solid black;
+  }
 }
 </style>

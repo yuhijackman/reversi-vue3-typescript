@@ -1,29 +1,70 @@
 <template>
   <section class="players">
-    <h1 class="players__title">Whose Turn?</h1>
     <div class="players__items">
-      <div class="players__item active">
-        Player 1
+      <div
+        class="players__item"
+        :class="blackClass"
+      >
+        <h2>Black</h2>
+        <p>{{ pieceCountsByColor.black }}</p>
       </div>
-      <div class="players__item inactive">
-        Player 2
+      <div
+        class="players__item"
+        :class="whiteClass"
+      >
+        <h2>White</h2>
+        <p>{{ pieceCountsByColor.white }}</p>
       </div>
     </div>
   </section>
 </template>
+
+<script lang="ts">
+import { defineComponent, computed, PropType } from 'vue';
+import { CellState, PieceCountsByColor } from '@/services/reversi';
+
+export default defineComponent({
+  props: {
+    turn: {
+      required: true,
+      type: String as PropType<CellState>,
+    },
+    pieceCountsByColor: {
+      required: true,
+      type: Object as PropType<PieceCountsByColor>,
+    },
+  },
+  setup(props) {
+    console.log(props.pieceCountsByColor);
+    const blackClass = computed(() => ({
+      active: props.turn === CellState.Black,
+      inactive: props.turn === CellState.White,
+    }));
+    const whiteClass = computed(() => ({
+      active: props.turn === CellState.White,
+      inactive: props.turn === CellState.Black,
+    }));
+    return {
+      blackClass,
+      whiteClass,
+    };
+  },
+});
+</script>
 
 <style lang="scss" scoped>
 .players {
   display: flex;
   flex-direction: column;
   align-items: center;
-  &__title {
-    font-size: 1.2rem;
-  }
   &__items {
     display: flex;
   }
   &__item {
+    text-align: center;
+    p {
+      margin: 10px 0;
+    }
     &:first-child {
       margin-right: 10px;
     }
