@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 enum CellState {
   White = 'white',
   Black = 'black',

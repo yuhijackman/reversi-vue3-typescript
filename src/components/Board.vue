@@ -48,7 +48,7 @@ export default defineComponent({
 .board {
   &__content {
     background-color: green;
-    width: 800px;
+    width: 640px;
     margin: 0 auto;
     border: 10px solid black;
   }

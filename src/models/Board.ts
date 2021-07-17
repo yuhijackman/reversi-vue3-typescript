@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 // Types
 import CellState from '@/types/CellState';
 
@@ -8,15 +7,7 @@ import Row from '@/models/Row';
 import Coordinate from '@/models/Coordinate';
 
 interface TraverseSchema {
-  [x: string]: any,
-  right: (prev: Coordinate) => Coordinate,
-  left: (prev: Coordinate) => Coordinate,
-  top: (prev: Coordinate) => Coordinate,
-  bottom: (prev: Coordinate) => Coordinate,
-  topRight: (prev: Coordinate) => Coordinate,
-  topBottom: (prev: Coordinate) => Coordinate,
-  topLeft: (prev: Coordinate) => Coordinate,
-  bottomLeft: (prev: Coordinate) => Coordinate,
+  [key: string]: (prev: Coordinate) => Coordinate,
 }
 export interface PieceCountsByColor {
   black: number,
@@ -82,16 +73,18 @@ export class Board {
     };
     let result: Cell[] = [];
     const targetCoordinate = new Coordinate(targetCell.x, targetCell.y);
-    result = Object.keys(this.traverseSchema).reduce(
-      (acc: Cell[], direction: keyof TraverseSchema) => [
+    result = Object.keys(this.traverseSchema).reduce((acc, direction) => {
+      console.log(acc);
+      acc = [
         ...acc,
         ...helper(
           targetCoordinate,
           this.traverseSchema[direction],
           [],
         ),
-      ], [],
-    );
+      ];
+      return acc;
+    }, [] as Cell[]);
     return result;
   }
 

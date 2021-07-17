@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-constructor */
 import CellState from '@/types/CellState';
 
 export default class Cell {

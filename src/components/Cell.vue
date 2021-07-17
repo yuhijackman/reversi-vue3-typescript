@@ -41,13 +41,13 @@ export default defineComponent({
 %stone {
   content: '';
   display: block;
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   border-radius: 45px;
 }
 .cell {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border: 1px solid black;
   display: flex;
   justify-content: center;
