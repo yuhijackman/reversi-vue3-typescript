@@ -93,7 +93,7 @@ export class Board {
     });
   }
 
-  private examineEveryCell(examiner: (cell: Cell, results: any) => void, results: any): void {
+  private examineEveryCell<T>(examiner: (cell: Cell, results: T) => void, results: T): void {
     const { rows } = this;
     for (let rowNum = 0; rowNum < rows.length; rowNum += 1) {
       const row: Row = rows[rowNum];
@@ -128,7 +128,7 @@ export class Board {
       black: 0,
       white: 0,
     };
-    this.examineEveryCell(this.isPlacableCell, results);
+    this.examineEveryCell<PieceCountsByColor>(this.isPlacableCell, results);
     return results;
   }
 
@@ -137,7 +137,7 @@ export class Board {
       black: 0,
       white: 0,
     };
-    this.examineEveryCell(Board.countPiecesByColor, results);
+    this.examineEveryCell<PieceCountsByColor>(Board.countPiecesByColor, results);
     return results;
   }
 
