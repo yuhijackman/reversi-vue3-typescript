@@ -74,7 +74,6 @@ export class Board {
     let result: Cell[] = [];
     const targetCoordinate = new Coordinate(targetCell.x, targetCell.y);
     result = Object.keys(this.traverseSchema).reduce((acc, direction) => {
-      console.log(acc);
       acc = [
         ...acc,
         ...helper(
@@ -142,24 +141,12 @@ export class Board {
     return results;
   }
 
-  private next(): void {
+  public next(): void {
     this.turn = this.turn === CellState.Black ? CellState.White : CellState.Black;
   }
 
-  private unplacable(): boolean {
-    if (this.turn === CellState.None) return true;
-    const placableCells: PieceCountsByColor = this.placablePieceCountsByColor;
-    if (placableCells[this.turn] === 0) {
-      return true;
-    }
-    return false;
-  }
-
-  private gameSetMatch(): void {
-    const placableCells: PieceCountsByColor = this.placablePieceCountsByColor;
-    if (placableCells[CellState.Black] === 0 && placableCells[CellState.White] === 0) {
-      this.end = true;
-    }
+  public gameSetMatch(): void {
+    this.end = true;
   }
 
   public place(x: number, y: number): void {
@@ -169,9 +156,5 @@ export class Board {
     pickedCell.state = this.turn;
     Board.flipCells(flippableCells, this.turn);
     this.next();
-    this.gameSetMatch();
-    if (this.unplacable()) {
-      this.next();
-    }
   }
 }

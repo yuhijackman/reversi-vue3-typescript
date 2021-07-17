@@ -19,6 +19,5 @@ module.exports = {
     "no-param-reassign": 0,
     "no-useless-constructor": 0,
     "no-shadow": 0,
-
   },
 };

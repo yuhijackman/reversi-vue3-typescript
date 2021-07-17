@@ -19,10 +19,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, watchEffect } from 'vue';
 import Row from '@/components/Row.vue';
-import { Board } from '@/models/Board';
+import { Board, PieceCountsByColor } from '@/models/Board';
 import Players from '@/components/Players.vue';
+import CellState from '@/types/CellState';
 
 export default defineComponent({
   components: {
@@ -35,6 +36,22 @@ export default defineComponent({
     const onPlace = (x: number, y: number) => {
       board.place(x, y);
     };
+
+    watchEffect((): void => {
+      if (board.turn !== CellState.None) {
+        const placableCells: PieceCountsByColor = board.placablePieceCountsByColor;
+        if (placableCells[board.turn] === 0) {
+          board.next();
+        }
+      }
+    });
+
+    watchEffect((): void => {
+      const placableCells: PieceCountsByColor = board.placablePieceCountsByColor;
+      if (placableCells[CellState.Black] === 0 && placableCells[CellState.White] === 0) {
+        board.gameSetMatch();
+      }
+    });
 
     return {
       board,
