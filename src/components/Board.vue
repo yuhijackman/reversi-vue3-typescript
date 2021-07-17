@@ -33,6 +33,7 @@ export default defineComponent({
   setup() {
     const board = reactive(new Board());
     board.init();
+
     const onPlace = (x: number, y: number) => {
       board.place(x, y);
     };
